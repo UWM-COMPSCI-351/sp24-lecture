@@ -89,11 +89,6 @@ public class ArrayedRobot implements Robot {
 		return (FunctionalPart)getPart(null, 0);
 	}
 	
-	private void insertPart(FunctionalPart n) {
-		parts[size++] = n;
-		// XXX: insert in order from end
-	}
-	
 	@Override // required
 	public boolean addPart(String function, Part part) {
 		assert wellFormed(): "invariant broke before add";
@@ -103,7 +98,8 @@ public class ArrayedRobot implements Robot {
 		FunctionalPart n = (FunctionalPart)part;
 		if (n.function != null) throw new IllegalArgumentException("part is already in a robot");
 		n.function = function;
-		insertPart(n);
+		parts[size++] = n;
+		// XXX: insert in order from end
 		assert wellFormed(): "invariant broke by add";
 		return true;
 	}

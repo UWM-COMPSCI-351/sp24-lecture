@@ -98,8 +98,18 @@ public class ArrayedRobot implements Robot {
 		FunctionalPart n = (FunctionalPart)part;
 		if (n.function != null) throw new IllegalArgumentException("part is already in a robot");
 		n.function = function;
-		parts[size++] = n;
-		// XXX: insert in order from end
+		int hole = size;
+		++size;
+		
+		while (hole > 0) {
+			FunctionalPart prev = parts[hole-1];
+			if (comparator.compare(n, prev) < 0) {
+				parts[hole] = prev;
+				--hole;
+			} else break;
+		}
+		parts[hole] = n;
+		
 		assert wellFormed(): "invariant broke by add";
 		return true;
 	}

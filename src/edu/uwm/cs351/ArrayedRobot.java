@@ -98,9 +98,16 @@ public class ArrayedRobot implements Robot {
 		FunctionalPart n = (FunctionalPart)part;
 		if (n.function != null) throw new IllegalArgumentException("part is already in a robot");
 		n.function = function;
-		int hole = size;
-		++size;
 		
+		insertPart(n);
+		
+		assert wellFormed(): "invariant broke by add";
+		return true;
+	}
+
+	private void insertPart(FunctionalPart n) {
+		int hole = size;
+		++size;		
 		while (hole > 0) {
 			FunctionalPart prev = parts[hole-1];
 			if (comparator.compare(n, prev) < 0) {
@@ -109,9 +116,6 @@ public class ArrayedRobot implements Robot {
 			} else break;
 		}
 		parts[hole] = n;
-		
-		assert wellFormed(): "invariant broke by add";
-		return true;
 	}
 
 	@Override // required
@@ -136,18 +140,20 @@ public class ArrayedRobot implements Robot {
 		assert wellFormed(): "invariant broke before getPart";
 		if(index < 0) throw new IllegalArgumentException("negative index");
 		Part result = null;
+		Part result1 = result;
 		if (function == null) {
-			if (index < size) result = parts[index];
+			if (index < size) result1 = parts[index];
 		} else {
 			for (int j=0; j < size; ++j) {
 				if (parts[j].function.equals(function)) {
 					if (index-- == 0) {
-						result =  parts[j];
+						result1 =  parts[j];
 						break;
 					}
 				}
 			}
 		}
+		result = result1;
 		assert wellFormed(): "invariant broke by getPart";
 		return result;
 	}
@@ -164,6 +170,12 @@ public class ArrayedRobot implements Robot {
 		if (comp == null) throw new NullPointerException();
 		if (comp != comparator) {
 			comparator = comp;
+			int savedSize = size;
+			size = 1;
+			for (int i=1; i < savedSize; ++i) {
+				insertPart(parts[i]);
+			}
+			
 			// TODO: insertion sort
 		}
 		assert wellFormed() : "invariant broken by setComparator";

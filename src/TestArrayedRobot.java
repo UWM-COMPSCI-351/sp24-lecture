@@ -75,7 +75,7 @@ public class TestArrayedRobot extends TestCase {
 		FunctionalPart p2 = new FunctionalPart();
 		self.addPart("ARM", p1);
 		assertTrue(self.addPart("ARM", p2));
-		assertSame(p2, self.getFirst());
+		assertSame(p1, self.getFirst());
 	}
 
 	public void test06() {
@@ -103,7 +103,7 @@ public class TestArrayedRobot extends TestCase {
 		self.addPart("", p1);
 		self.addPart("", p2);
 		self.addPart("", p3);
-		assertSame(p3, self.getFirst());
+		assertSame(p1, self.getFirst());
 	}
 	
 	public void test09() {
@@ -120,7 +120,7 @@ public class TestArrayedRobot extends TestCase {
 		assertSame(p2, self.getPart(null, 1));
 		assertSame(p3, self.getPart(null, 2));
 		assertSame(p4, self.getPart(null, 3));
-		assertNull(self.getPart(null, 1));
+		assertNull(self.getPart(null, 4));
 	}
 	
 	

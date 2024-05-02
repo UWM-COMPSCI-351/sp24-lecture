@@ -14,7 +14,7 @@ public class CompareSort {
 		Integer[][] arrays = new Integer[TIMES][n];
 		for (int i = 0; i < TIMES; ++i) {
 			for (int j=0; j < n; ++j) {
-				arrays[i][j] = r.nextInt();
+				arrays[i][j] = j; // r.nextInt();
 			}
 		}
 		long start = System.nanoTime();
@@ -39,7 +39,7 @@ public class CompareSort {
 		Random r = new Random();
 		CompareSort cs = new CompareSort();
 		System.out.println("2^N BubbleSort  QuickSort LibrarySort");
-		for (int p = 10; p < 20; ++p) {
+		for (int p = 1; p < 20; ++p) {
 			cs.compare(r,  p);;
 		}
 	}

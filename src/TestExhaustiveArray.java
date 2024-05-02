@@ -1,10 +1,12 @@
-import edu.uwm.cs351.Quicksort;
 import java.util.Comparator;
 
+import edu.uwm.cs351.Bubblesort;
+import edu.uwm.cs351.Quicksort;
 import junit.framework.TestCase;
 
 public class TestExhaustiveArray extends TestCase {
 	private Quicksort<Integer> qsort;
+	private Bubblesort<Integer> bs;
 
 	public void test1001() {
 		qsort = new Quicksort<>(Comparator.<Integer>naturalOrder());
@@ -22,9 +24,9 @@ public class TestExhaustiveArray extends TestCase {
 	}
 
 	public void test2002() {
-		qsort = new Quicksort<>(Comparator.<Integer>naturalOrder());
+		bs = new Bubblesort<Integer>(Comparator.<Integer>naturalOrder());
 		Integer[] a = new Integer[]{1,2,};
-		qsort.sort(a);
+		bs.sort(a);
 		assertEquals(1,a[0].intValue());
 		assertEquals(2,a[1].intValue());
 	}
